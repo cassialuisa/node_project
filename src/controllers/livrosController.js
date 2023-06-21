@@ -18,6 +18,18 @@ class LivroController {
       }
     })
   }
+  static atualizarLivro = (req, res) => {
+    //pega o valor que está no endereço da rota
+    const id = req.params.id;
+    //com o mongo a palavra reservada que usamos para atualizar é o set
+    livros.findByIdAndUpdate(id, {$set: req.body}, (err) => {
+      if(!err){
+        res.status(200).send({message: 'Livro atualizado com sucesso!'})
+      } else {
+        res.status(500).send({message: err.message})
+      }
+    })
+  }
 }
 
 export default LivroController;
