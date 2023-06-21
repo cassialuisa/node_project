@@ -30,6 +30,16 @@ class LivroController {
       }
     })
   }
+  static apagarLivro = (req, res) => {
+    const id = req.params.id;
+    livros.findByIdAndDelete(id, {$set: req.body}, (err) => {
+      if(!err) {
+        res.status(200).send({message: 'Livro removido da lista'});
+      } else {
+        res.status(500).send({message: err.message})
+      }
+    })
+  }
 }
 
 export default LivroController;

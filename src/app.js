@@ -22,19 +22,6 @@ app.get('/livros/:id',(req, res) => {
     let index = buscaLivro(req.params.id);
     res.status(200).json(livros[index]);
 })
- 
-app.put('/livros/:id',(req, res) => {
-    let index = buscaLivro(req.params.id);
-    livros[index].titulo = req.body.titulo;
-    res.status(201).json(livros);
-})
-
-app.delete('/livros/:id',(req, res) => {
-    let {id} = req.params;
-    let index = buscaLivro(id);
-    livros.splice(index, 1);
-    res.status(201).send('Livro removido com sucesso');
-})
 
 function buscaLivro(id) {
     return livros.findIndex(livro => livro.id == id);
