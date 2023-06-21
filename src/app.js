@@ -1,5 +1,7 @@
 import express from "express";
-import db from './config/dbConnect.js'
+import db from './config/dbConnect.js';
+import livros from './models/Livro.js';
+import routes from './routes/index.js';
 
 //preve o erro de conexão
 db.on("error", console.log.bind(console, 'Erro de conexão'))
@@ -13,18 +15,22 @@ const app = express();
 // recurso do Express que vai conseguir fazer interpretar o que está chegando via post ou via put e transformar aquilo em um objeto para eu poder armazenar, visualizar e manipular.
 app.use(express.json());
 
-const livros = [
-    {id: 1, "titulo": "Senhor dos Aneis"},
-    {id: 2, "titulo": "O Hobbit"}
-]
+routes(app);
 
-app.get('/', (req, res) => {
-    res.status(200).send('Curso de Node');
-}) 
+// const livros = [
+//     {id: 1, "titulo": "Senhor dos Aneis"},
+//     {id: 2, "titulo": "O Hobbit"}
+// ]
+// console.log(livros)
+// app.get('/', (req, res) => {
+//     res.status(200).send('Curso de Node');
+// }) 
 
-app.get('/livros', (req, res) => {
-    res.status(200).json(livros)
-})
+// app.get('/livros', (req, res) => {
+//     livros.find((err, livros) => {
+//      res.status(200).json(livros)
+//     })
+// })
 
 app.get('/livros/:id',(req, res) => {
     let index = buscaLivro(req.params.id);
