@@ -6,6 +6,16 @@ class LivroController {
       res.status(200).json(livros);
     })
   }
+  static buscarPeloId = (req, res) => {
+    const id = req.params.id;
+    livros.findById(id, (err, livro) => {
+      if(err){
+        res.status(400).send({message: `${err.message} Id do livro não localizado.`})
+      } else {
+        res.status(200).send(livro)
+      }
+    })
+  }
   static cadastrarLivros = (req, res) => {
     //cria um livro baseado no corpo da requisição
     let livro = new livros(req.body);
