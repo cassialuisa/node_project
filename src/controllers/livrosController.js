@@ -2,13 +2,18 @@ import livros from '../models/Livro.js';
 
 class LivroController {
   static listarLivros = (req, res) => {
-    livros.find((err, livros) => {
-      res.status(200).json(livros);
+    livros.find()
+      .populate('autor')
+      .exec((err, livros) => {
+        res.status(200).json(livros);
     })
   }
   static buscarPeloId = (req, res) => {
     const id = req.params.id;
-    livros.findById(id, (err, livro) => {
+    livros.findById(id)
+    //para omitir o campo nacionalidade passamos como segundo parâmetro oq queremos que apareça
+      .populate('autor', 'nome')
+      .exec((err, livro) => {
       if(err){
         res.status(400).send({message: `${err.message} Id do livro não localizado.`})
       } else {
